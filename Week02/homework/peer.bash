@@ -1,4 +1,3 @@
-@@ -0,0 +1,100 @@
 #!/bin/bash
 
 #Storyline: Create peer VPN configuration file
@@ -87,12 +86,12 @@ Endpoint =  ${end}
 " > ${pFile}
 #add our peer configuration to the server config
 echo "
-#wyatt begin
+# ${the_client} begin
 [Peer]
 Publickey = ${clientPub}
 PresharedKey = ${pre}
 AllowedIPs = 10.254.132.100/32
-#wyatt end" | tee -a wg0.conf
+# ${the_client} end | tee -a wg0.conf
 echo " 
 sudo cp wg0.conf /etc/wireguard
 sudo wg addconf wg0<(wg-quick strip wg0)
