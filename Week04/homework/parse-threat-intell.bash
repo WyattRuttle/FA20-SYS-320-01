@@ -2,13 +2,15 @@
 #Storyline: Download threat file again and parse IP addresses
 #wget https://rules.emergingthreats.net/blockrules/emerging-compromised.rules -O /tmp/emerging-compromised.rules
 #egrep -o '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.0/[0-9]{1,2}' /tmp/emerging-compromised.rules | sort -u | tee threatIPs.txt
-echo "You can also use the following options:"
-echo " -i iptables"
-echo " -c Cisco"
-echo " -n Netscreen"
-echo " -w Windows Firewall"
-echo " -m Mac OS X"
-echo " -p Parse targetedthreats.csv"
+function help (){
+	echo "You can also use the following options:"
+	echo " -i iptables"
+	echo " -c Cisco"
+	echo " -n Netscreen"
+	echo " -w Windows Firewall"
+	echo " -m Mac OS X"
+	echo " -p Parse targetedthreats.csv"
+}
 #Filename variable
 tFile="/tmp/emerging-compromised.rules"
 echo "${tFile}"
@@ -36,9 +38,11 @@ else
 		fi
 fi
 #Use the bash getopts function to create switches for iptables, cisco, netscreen, windows firewall, and Mac OS X. Based on their selection, create an inbound drop rule for the respective firewall.
-while getopts 'icnwmp:' OPTION ; do
+while getopts 'hicnwmp:' OPTION ; do
 	case "$OPTION" in
 
+		h) help
+		;;
 		i)
 			for eachIP in $(cat badIPAdrs.txt)
 			do
@@ -76,7 +80,7 @@ while getopts 'icnwmp:' OPTION ; do
 		;;
 		p)
 			wget https://raw.githubusercontent.com/botherder/targetedthreats/master/targetedthreats.csv -O /tmp/targetedthreats.csv
-			awk -F '"' '{ print $4 }' /tmp/targetedthreats.csv | sort -u | tee badDomains.txt
+			awk -F, '{ print $4 }' /tmp/targetedthreats.csv | sort -u | tee badDomains.txt
 			echo "class-map match-any BAD_URLS" | tee URL.cfg
 				for eachDomain in $(cat badDomains.txt)
 				do
@@ -84,7 +88,7 @@ while getopts 'icnwmp:' OPTION ; do
 				done
 		exit 0
 		;;
-		*)
+		*)	help
 			#invalid_opt
 		;;
 	esac
