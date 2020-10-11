@@ -22,7 +22,7 @@ function parses (){
 	{ printf format, $1, $4, $6, $9, $10, $7 }'
 }
 # allows user to print the results to console, save as a file, or create firewall rule 
-while getopts 'psc:' OPTION ; do
+while getopts 'psc' OPTION ; do
     case "$OPTION" in
         p) parses
 		;;
@@ -48,7 +48,7 @@ while getopts 'psc:' OPTION ; do
 			fi
 			parses > "${parseFile}.txt"
         ;;
-		c)
+		c) bash parse-threat-intell.bash
 		;;
     esac
 done
