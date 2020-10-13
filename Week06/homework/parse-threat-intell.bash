@@ -25,28 +25,28 @@ echo "${lFile}"
 tFile="/tmp/emerging-compromised.rules"
 echo "${tFile}"
 #Check if the threat file exists
-#if [[ -f "${tFile}" ]]
-#then
-		#Prompt to download again
-#		echo "The file ${tFile} exists."
-#		echo -n "Do you want to download it again? [y/N]"
-#		read to_download
-#
-#		if [[ "${to_download}" == "N" || "${to_download}" == "" ]]
-#		then
-#				#echo "Exit..."
-#				exit 1
-#		elif [[ "${to_download}" == "y" ]]
-#		then
-#				echo "Downloading the threat file again..."
-#				wget https://rules.emergingthreats.net/blockrules/emerging-compromised.rules -O /tmp/emerging-compromised.rules
-#				egrep -o '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' /tmp/emerging-compromised.rules | sort -u | tee badIPAdrs.txt
+if [[ -f "${tFile}" ]]
+then
+#Prompt to download again
+		echo "The file ${tFile} exists."
+		echo -n "Do you want to download it again? [y/N]"
+		read to_download
+
+		if [[ "${to_download}" == "N" || "${to_download}" == "" ]]
+		then
+				echo "Exit..."
+				exit 1
+		elif [[ "${to_download}" == "y" ]]
+		then
+				echo "Downloading the threat file again..."
+				wget https://rules.emergingthreats.net/blockrules/emerging-compromised.rules -O /tmp/emerging-compromised.rules
+				egrep -o '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' /tmp/emerging-compromised.rules | sort -u | tee badIPAdrs.txt
 		#if the admin doesnt specify y/n then error
-#else
-#				echo "Invalid value"
-#				exit 1	
-#		fi
-#fi
+else
+				echo "Invalid value"
+				exit 1	
+		fi
+fi
 #Use the bash getopts function to create switches for iptables, cisco, netscreen, windows firewall, and Mac OS X. Based on their selection, create an inbound drop rule for the respective firewall.
 while getopts 'hicnwmp:' OPTION ; do
 	case "$OPTION" in
@@ -56,14 +56,14 @@ while getopts 'hicnwmp:' OPTION ; do
 		i)
 			for eachIP in $(cat badIPAdrs.txt)
 			do
-#				echo "iptables -A INPUT -s ${eachIP} -j DROP" | tee -a badIPAdrs.iptables
+				echo "iptables -A INPUT -s ${eachIP} -j DROP" | tee -a badIPAdrs.iptables
 			done
 		exit 0
 		;;
 		c) 
 			for eachIP in $(cat badIPAdrs.txt)
 			do
-#				echo "access-list 1 deny ${eachIP}" | tee -a startup.cfg 
+				echo "access-list 1 deny ${eachIP}" | tee -a startup.cfg 
 			done
 		exit 0
 		;;

@@ -48,9 +48,9 @@ while getopts 'psc:' OPTION ; do
 				fi
 			fi
         ;;
-		c)bash parse-threat-intell.bash ${OPTARG}
+		c)bash parse-threat-intell.bash -${OPTARG}
 			echo "${OPTARG}"
-			exit 0
+			exit 1
 		;;
     esac
 done
