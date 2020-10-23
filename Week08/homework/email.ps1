@@ -11,5 +11,5 @@ $email = "Wyatt.ruttle@mymail.champlain.edu"
 #To Address
 $toEmail = "deployer@csi-web"
 #Sending the email
-Send-MailMessage -From $email -to $toEmail -Subject "A Greeting" $msg -SmtpServer 192.168.6.71
+Send-MailMessage -From $email -to $toEmail -Subject "A Greeting" -Body $msg -SmtpServer 192.168.6.71
 
