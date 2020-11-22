@@ -1,0 +1,14 @@
+2. Ensure you respond to why you selected the four other cmdlets and its usefulness during an investigation.
+This is answered in the comments above each cmdlet
+
+4. What did you find the most challenging about this assignment and what did you do to overcome it? 
+The most challenging part of this assigment was to find other artifacts that would be useful in an incident response tool.
+While there are plenty of artifacts, it was difficult to only use Powershell cmdlets. To overcome this I did a lot of reseach and found
+a "Global Information Assurance Certification Paper" that referenced artifacts to look for during incident response. 
+I then found cmdlets that could output information relative to what the paper referenced. 
+
+5. What did you like the most about this assignment and why?
+What I enjoyed most about this assignment was that it developed a thorough program. I like when the programs I make for class
+are actually completed. By this I mean they are useful tools that I would actual use in production. This program creates .csv files
+of artifacts and has the ability to email them in a zipped file with a checksum. This is great practice. I really enjoyed the fact 
+that you made compression and security a part of the assignment. 
